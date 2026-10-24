@@ -1,6 +1,7 @@
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
-
+base: '/lomba-dweb/',
+  
 export default defineConfig({
   build: {
     rollupOptions: {
