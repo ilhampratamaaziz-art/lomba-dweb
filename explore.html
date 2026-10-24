@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peta Satelit &amp; Cuaca 38 Provinsi Indonesia — KotaTangguh</title>
+  <meta name="description" content="Peta interaktif 38 provinsi di Indonesia dengan citra satelit bumi resolusi tinggi, data cuaca live BMKG, dan indikator ketahanan iklim.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230ea5e9'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+</head>
+<body>
+  <!-- Header Navigation -->
+  <header class="header">
+    <div class="container">
+      <a href="/" class="logo-group">
+        <div class="logo-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-title">KotaTangguh</span>
+          <span class="logo-subtitle">Climate Resilience</span>
+        </div>
+      </a>
+
+      <nav class="nav" id="main-nav">
+        <a href="/">Beranda</a>
+        <a href="/dashboard.html">Dashboard Cuaca</a>
+        <a href="/explore.html" class="active">Peta 38 Provinsi</a>
+        <a href="/preparedness.html">Pusat Siaga 72 Jam</a>
+        <a href="/climate-trends.html">Tren Iklim</a>
+        <a href="/methodology.html">Data &amp; Metodologi</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="nav-badge-live">
+          <span class="pulse-dot"></span>
+          <span>BMKG LIVE</span>
+        </div>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Buka Menu Navigasi">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div style="margin-bottom: var(--space-6);">
+        <div class="hero-tag">
+          <span>Citra Satelit Bumi &amp; Telemetri 38 Provinsi</span>
+        </div>
+        <h1 style="margin-bottom: var(--space-2);">Peta Cuaca 38 Provinsi Nusantara</h1>
+        <p style="margin: 0; color: var(--text-secondary); max-width: 840px;">
+          Observatorium geospasial yang mencakup seluruh 38 provinsi di Indonesia (dari Sabang di Aceh hingga Merauke di Papua Selatan). Alihkan lapisan peta antara <strong>Citra Satelit Bumi Resolusi Tinggi</strong> atau <strong>Peta Vektor Gelap</strong>, dan klik pin provinsi untuk telemetri meteorologis langsung.
+        </p>
+      </div>
+
+      <!-- Controls: Layer Switcher & Regional Filter Pills -->
+      <div class="map-filter-bar">
+        <div class="filter-pills-group">
+          <button class="filter-pill active" data-region="all">Semua (38 Provinsi)</button>
+          <button class="filter-pill" data-region="Sumatera">Sumatera (10)</button>
+          <button class="filter-pill" data-region="Jawa">Jawa (6)</button>
+          <button class="filter-pill" data-region="Bali & Nusa Tenggara">Bali &amp; Nusa Tenggara (3)</button>
+          <button class="filter-pill" data-region="Kalimantan">Kalimantan (5)</button>
+          <button class="filter-pill" data-region="Sulawesi">Sulawesi (6)</button>
+          <button class="filter-pill" data-region="Maluku">Maluku (2)</button>
+          <button class="filter-pill" data-region="Papua">Papua (6)</button>
+        </div>
+
+        <!-- Layer Toggle (Satellite vs Dark Vector) -->
+        <div class="layer-toggle-group">
+          <button class="layer-btn active" id="layer-satellite">Satelit Bumi</button>
+          <button class="layer-btn" id="layer-dark">Vektor Gelap</button>
+        </div>
+      </div>
+
+      <!-- Interactive Leaflet Map Container -->
+      <div class="map-container-wrapper">
+        <div id="map"></div>
+      </div>
+
+      <!-- 38 Provinces Directory Matrix Under Map -->
+      <div style="margin-top: var(--space-8);">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="12 8 8 12 12 16 12 8"/></svg>
+              <span>Daftar Lengkap Titik Pantau 38 Provinsi Indonesia</span>
+            </h3>
+            <p style="margin: 0; font-size: 0.8125rem; color: var(--text-muted);">
+              Klik kartu provinsi mana pun untuk mengarahkan kamera peta satelit dan melihat data cuaca seketika.
+            </p>
+          </div>
+          <span class="badge badge-source badge-source-bmkg" id="matrix-count-badge">Menampilkan 38 Provinsi</span>
+        </div>
+        <div class="grid-3" id="explore-city-grid">
+          <!-- Dynamically populated 38 provinces -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- High-End Civic Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-group">
+            <div class="logo-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <span class="logo-title">KotaTangguh</span>
+          </div>
+          <p>
+            Platform edukasi dan ketahanan iklim perkotaan Indonesia. Mengadvokasi transparansi data cuaca terbuka untuk komunitas perkotaan yang tangguh dan adaptif di 38 provinsi Nusantara.
+          </p>
+          <div class="sdg-badges" style="margin-top: var(--space-4);">
+            <span class="sdg-pill sdg-11">SDG 11: Kota Berkelanjutan</span>
+            <span class="sdg-pill sdg-13">SDG 13: Aksi Iklim</span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigasi</h4>
+          <ul>
+            <li><a href="/">Beranda</a></li>
+            <li><a href="/dashboard.html">Dashboard Cuaca</a></li>
+            <li><a href="/explore.html">Peta Satelit 38 Provinsi</a></li>
+            <li><a href="/preparedness.html">Pusat Siaga 72 Jam</a></li>
+            <li><a href="/climate-trends.html">Tren Iklim</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Data Terbuka</h4>
+          <ul>
+            <li><a href="https://data.bmkg.go.id" target="_blank" rel="noopener">BMKG Indonesia</a></li>
+            <li><a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo API</a></li>
+            <li><a href="https://www.openstreetmap.org" target="_blank" rel="noopener">OpenStreetMap</a></li>
+            <li><a href="/methodology.html">Metodologi &amp; Formula IKH</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Kesiapsiagaan</h4>
+          <ul>
+            <li><a href="https://bnpb.go.id" target="_blank" rel="noopener">BNPB Indonesia</a></li>
+            <li><a href="https://basarnas.go.id" target="_blank" rel="noopener">BASARNAS</a></li>
+            <li><a href="/preparedness.html#tsb">Tas Siaga Bencana</a></li>
+            <li><a href="/preparedness.html#kontak">Kontak Darurat 112</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 KotaTangguh • Lomba Nasional Web Desain 2026. Dikembangkan dengan prinsip Human-Centered UI/UX.</p>
+        <p class="mono" style="font-size: 0.75rem;">Status: BMKG Open API • CC BY 4.0 Open-Meteo • ODbL OpenStreetMap</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script type="module" src="/js/pages/explore.js"></script>
+</body>
+</html>

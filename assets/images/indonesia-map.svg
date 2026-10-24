@@ -1,0 +1,32 @@
+<svg width="1400" height="700" viewBox="0 0 1400 700" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:0.4"/>
+      <stop offset="100%" style="stop-color:#00bfa5;stop-opacity:0.3"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+  </defs>
+  <rect width="1400" height="700" fill="#0a1929"/>
+  <g opacity="0.08" stroke="#00d4ff" stroke-width="0.5">
+    <line x1="0" y1="150" x2="1400" y2="150"/><line x1="0" y1="300" x2="1400" y2="300"/>
+    <line x1="0" y1="450" x2="1400" y2="450"/><line x1="0" y1="600" x2="1400" y2="600"/>
+    <line x1="250" y1="0" x2="250" y2="700"/><line x1="500" y1="0" x2="500" y2="700"/>
+    <line x1="750" y1="0" x2="750" y2="700"/><line x1="1000" y1="0" x2="1000" y2="700"/>
+  </g>
+  <path d="M180 200Q160 250 170 300Q175 340 185 380L200 400Q210 390 220 370Q225 340 230 310Q235 270 240 240L235 210Q220 200 200 195Z" fill="url(#mg)" stroke="#00d4ff" stroke-width="2" filter="url(#glow)"/>
+  <path d="M350 420L520 425Q540 422 550 418L560 410Q555 400 545 398L380 395Q360 398 350 405Z" fill="url(#mg)" stroke="#00d4ff" stroke-width="2" filter="url(#glow)"/>
+  <path d="M400 250Q450 240 500 245Q550 252 580 265Q600 280 610 310L615 350Q610 380 595 400L570 410Q540 405 510 395Q470 380 440 360Q410 335 395 305L390 270Z" fill="url(#mg)" stroke="#00d4ff" stroke-width="2" filter="url(#glow)"/>
+  <path d="M680 280L700 260Q710 250 720 255L735 270Q740 290 735 310L720 340Q710 360 700 370L685 380Q675 385 665 380L655 365Q650 345 655 325L665 300Z" fill="url(#mg)" stroke="#00d4ff" stroke-width="2" filter="url(#glow)"/>
+  <path d="M950 300Q1000 290 1050 295Q1100 305 1130 325L1150 350Q1155 380 1145 410L1120 435Q1090 445 1050 440Q1000 430 970 410L950 385Q945 355 948 330Z" fill="url(#mg)" stroke="#00d4ff" stroke-width="2" filter="url(#glow)"/>
+  <path d="M580 430L650 432Q670 431 680 428L690 422Q688 415 680 413L600 410Q588 412 580 418Z" fill="url(#mg)" stroke="#00d4ff" stroke-width="2" filter="url(#glow)"/>
+  <ellipse cx="820" cy="340" rx="25" ry="35" fill="url(#mg)" stroke="#00d4ff" stroke-width="2" filter="url(#glow)"/>
+  <circle cx="380" cy="410" r="8" fill="#00d4ff"><animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/></circle>
+  <circle cx="380" cy="410" r="15" fill="none" stroke="#00d4ff" opacity="0.3"><animate attributeName="r" values="15;25" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.3;0" dur="2s" repeatCount="indefinite"/></circle>
+  <circle cx="530" cy="415" r="7" fill="#00bfa5"><animate attributeName="opacity" values="0.7;1;0.7" dur="2.5s" repeatCount="indefinite"/></circle>
+  <circle cx="195" cy="230" r="6" fill="#00bfa5"><animate attributeName="opacity" values="0.7;1;0.7" dur="2.2s" repeatCount="indefinite"/></circle>
+  <circle cx="690" cy="330" r="6" fill="#00bfa5"><animate attributeName="opacity" values="0.7;1;0.7" dur="2.7s" repeatCount="indefinite"/></circle>
+  <circle cx="420" cy="412" r="6" fill="#00bfa5"><animate attributeName="opacity" values="0.7;1;0.7" dur="2.3s" repeatCount="indefinite"/></circle>
+  <g opacity="0.2"><line x1="380" y1="410" x2="530" y2="415" stroke="#00d4ff" stroke-dasharray="3,3"><animate attributeName="stroke-dashoffset" values="0;-6" dur="3s" repeatCount="indefinite"/></line></g>
+</svg>

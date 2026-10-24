@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data &amp; Metodologi Terbuka — KotaTangguh</title>
+  <meta name="description" content="Dokumentasi ilmiah, metodologi formula Indikator Kewaspadaan Hujan (IKH), dan transparansi sumber data terbuka BMKG & Open-Meteo.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230ea5e9'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+  <script type="module" crossorigin src="/assets/pages-0P5Txbp4.js"></script>
+  <script type="module" crossorigin src="/assets/openmeteo-weather-Bj35Lj7e.js"></script>
+  <script type="module" crossorigin src="/assets/geocoding-w-Y3ODyd.js"></script>
+  <script type="module" crossorigin src="/assets/app-DWfmoqSu.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/pages-C66s7fnm.css">
+</head>
+<body>
+  <!-- Header Navigation -->
+  <header class="header">
+    <div class="container">
+      <a href="/" class="logo-group">
+        <div class="logo-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-title">KotaTangguh</span>
+          <span class="logo-subtitle">Climate Resilience</span>
+        </div>
+      </a>
+
+      <nav class="nav" id="main-nav">
+        <a href="/">Beranda</a>
+        <a href="/dashboard.html">Dashboard Cuaca</a>
+        <a href="/explore.html">Jelajahi Peta</a>
+        <a href="/preparedness.html">Pusat Siaga 72 Jam</a>
+        <a href="/climate-trends.html">Tren Iklim</a>
+        <a href="/methodology.html" class="active">Data &amp; Metodologi</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="nav-badge-live">
+          <span class="pulse-dot"></span>
+          <span>BMKG LIVE</span>
+        </div>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Buka Menu Navigasi">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container container-narrow">
+      <div style="margin-bottom: var(--space-8);">
+        <span class="hero-tag">🔬 Transparansi Akademik &amp; Rekayasa Data</span>
+        <h1 style="margin-bottom: var(--space-3);">Data, Metodologi, &amp; Batasan Produk</h1>
+        <p class="lead" style="margin-bottom: 0;">
+          KotaTangguh dibangun di atas prinsip integritas data ilmiah (Open Science) dan non-eksploitatif. Halaman ini menjelaskan asal-usul data, formula matematis Indikator Kewaspadaan Hujan (IKH), batasan teknis, serta keselarasan dengan Tujuan Pembangunan Berkelanjutan (SDGs).
+        </p>
+      </div>
+
+      <!-- Section 1: IKH Formula -->
+      <section class="card card-elevated" style="margin-bottom: var(--space-6); border-left: 4px solid var(--primary);">
+        <h2>1. Metodologi Indikator Kewaspadaan Hujan (IKH)</h2>
+        <div class="badge status-notice" style="margin-bottom: var(--space-3);">Versi 1.2-resilience (Eksperimental)</div>
+        <p>
+          Indikator Kewaspadaan Hujan (IKH) adalah indeks komposit matematis berskala 0 hingga 100 yang dirancang untuk memadatkan berbagai dimensi meteorologis ke dalam satu angka kewaspadaan intuitif bagi masyarakat perkotaan dalam rentang waktu 6 jam ke depan.
+        </p>
+
+        <div class="formula-box">
+          IKH = (0.35 &times; P_prob) + (0.30 &times; P_amount) + (0.20 &times; W_code) + (0.15 &times; A_wind)
+        </div>
+
+        <h4 style="margin-top: var(--space-4);">Bobot &amp; Rasionalisasi Komponen:</h4>
+        <ul style="margin-bottom: var(--space-4);">
+          <li>
+            <strong>P_prob (Probabilitas Hujan Maksimum — Bobot 35%):</strong> Nilai maksimum peluang presipitasi model cuaca dalam 6 jam ke depan. Peluang tinggi mengindikasikan ketidakstabilan konvektif atmosfer.
+          </li>
+          <li>
+            <strong>P_amount (Akumulasi Presipitasi Prakiraan — Bobot 30%):</strong> Total volume air hujan yang diprakirakan turun (mm). Dikalibrasi dengan skala linier hingga ambang batas 25 mm (batas kapasitas drainase jalan kota standar).
+          </li>
+          <li>
+            <strong>W_code (Tingkat Keparahan Kode Cuaca WMO — Bobot 20%):</strong> Kode klasifikasi WMO (World Meteorological Organization). Kode badai petir (95, 96, 99) bernilai 100 poin; hujan lebat bernilai 70-80 poin; hujan ringan 40 poin.
+          </li>
+          <li>
+            <strong>A_wind (Stabilitas Angin &amp; Turbulensi — Bobot 15%):</strong> Kecepatan hembusan angin permukaan. Angin kencang memperbesar bahaya dahan patah, baliho roboh, dan tempias air hujan ke dalam bangunan.
+          </li>
+        </ul>
+
+        <h4>Skala Kategori &amp; Ambang Batas:</h4>
+        <table class="data-table" style="margin-top: var(--space-3);">
+          <thead>
+            <tr>
+              <th>Skor IKH</th>
+              <th>Kategori</th>
+              <th>Implikasi Perkotaan</th>
+              <th>Respon Masyarakat Disarankan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mono"><strong>0 — 29</strong></td>
+              <td><span class="badge status-normal">Normal</span></td>
+              <td>Kondisi atmosfer stabil; risiko genangan sangat kecil.</td>
+              <td>Aktivitas luar ruangan normal.</td>
+            </tr>
+            <tr>
+              <td class="mono"><strong>30 — 59</strong></td>
+              <td><span class="badge status-notice">Perlu Diperhatikan</span></td>
+              <td>Peluang gerimis hingga hujan ringan lokal.</td>
+              <td>Bawa payung/jas hujan; cek talang air.</td>
+            </tr>
+            <tr>
+              <td class="mono"><strong>60 — 79</strong></td>
+              <td><span class="badge status-warning">Waspada</span></td>
+              <td>Hujan sedang hingga lebat; potensi genangan jalan cekungan.</td>
+              <td>Hindari underpass; kurangi kecepatan berkendara.</td>
+            </tr>
+            <tr>
+              <td class="mono"><strong>80 — 100</strong></td>
+              <td><span class="badge status-danger">Perhatian Tinggi</span></td>
+              <td>Hujan sangat deras disertai petir dan angin kencang.</td>
+              <td>Tunda perjalanan; amankan aset penting &amp; TSB.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Section 2: Data Sources -->
+      <section class="card" style="margin-bottom: var(--space-6);">
+        <h2>2. Sumber Data &amp; Kebijakan Penggunaan</h2>
+
+        <div style="margin-bottom: var(--space-4);">
+          <h3>A. Badan Meteorologi, Klimatologi, dan Geofisika (BMKG)</h3>
+          <p>
+            <strong>Endpoint:</strong> <code>https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4={CODE}</code><br>
+            <strong>Cakupan:</strong> Prakiraan cuaca 3 hari per 3 jam untuk unit administratif terkecil (desa/kelurahan) di seluruh Indonesia.<br>
+            <strong>Pembaruan:</strong> 2 kali sehari berdasarkan konsolidasi model dan analis cuaca BMKG.<br>
+            <strong>Atribusi:</strong> Data terbuka resmi BMKG Indonesia. Sesuai amanat Undang-Undang No. 31 Tahun 2009 tentang Meteorologi, Klimatologi, dan Geofisika.
+          </p>
+        </div>
+
+        <div style="margin-bottom: var(--space-4);">
+          <h3>B. Open-Meteo Global Meteorological Model</h3>
+          <p>
+            <strong>Endpoint:</strong> <code>https://api.open-meteo.com/v1/forecast</code><br>
+            <strong>Cakupan:</strong> Data numerik presipitasi per jam, suhu 2m, indeks UV, dan hembusan angin berdasarkan penggabungan model DWD ICON dan ECMWF IFS.<br>
+            <strong>Lisensi:</strong> Creative Commons Attribution 4.0 International (CC BY 4.0).
+          </p>
+        </div>
+
+        <div style="margin-bottom: var(--space-4);">
+          <h3>C. Copernicus Atmosphere Monitoring Service (CAMS) Air Quality</h3>
+          <p>
+            <strong>Endpoint:</strong> <code>https://air-quality-api.open-meteo.com/v1/air-quality</code><br>
+            <strong>Parameter:</strong> US AQI, PM2.5, PM10 berbasis asimilasi satelit atmosfer CAMS.<br>
+            <strong>Catatan Ilmiah:</strong> Data berbasis pemodelan asimilasi atmosfer berskala regional, bukan pembacaan sensor stasiun fisik mikro jalan raya.
+          </p>
+        </div>
+
+        <div>
+          <h3>D. OpenStreetMap &amp; Leaflet</h3>
+          <p>
+            <strong>Tile Server:</strong> CartoDB Dark Matter / OpenStreetMap contributors.<br>
+            <strong>Lisensi:</strong> Open Database License (ODbL).
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 3: Product Boundaries & Disclaimer -->
+      <section class="card" style="margin-bottom: var(--space-6); background: rgba(245, 158, 11, 0.05); border-color: rgba(245, 158, 11, 0.3);">
+        <h2>3. Batasan Produk &amp; Penafian (Disclaimer)</h2>
+        <ul>
+          <li>
+            <strong>Bukan Sistem Peringatan Dini Resmi:</strong> KotaTangguh adalah platform kesadaran edukatif dan kesiapsiagaan warga. Platform ini tidak menggantikan peringatan dini resmi (Early Warning System) yang diterbitkan oleh BMKG, BNPB, atau BPBD setempat.
+          </li>
+          <li>
+            <strong>Bukan Prediksi Ketinggian Banjir Presisi:</strong> IKH menghitung potensi cuaca hujan lebat, bukan simulasi hidrolika titik luapan kali atau ketinggian genangan air di gang/jalan tertentu.
+          </li>
+          <li>
+            <strong>Toleransi Model Atmosfer:</strong> Prakiraan cuaca numerik memiliki margin ketidakpastian inheren akibat dinamika mikroklimat tropis yang berkembang sangat cepat (misal: awan konvektif lokal).
+          </li>
+        </ul>
+      </section>
+
+      <!-- Section 4: SDGs Alignment -->
+      <section class="card" style="margin-bottom: var(--space-6);">
+        <h2>4. Keselarasan dengan Tujuan Pembangunan Berkelanjutan (SDGs)</h2>
+        <div class="grid-2" style="margin-top: var(--space-4);">
+          <div class="card" style="background: rgba(253, 157, 36, 0.1); border-color: rgba(253, 157, 36, 0.3);">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <span class="sdg-pill sdg-11">SDG 11</span>
+              <h4 style="margin: 0; color: #fd9d24;">Kota &amp; Komunitas Berkelanjutan</h4>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;">
+              Mendukung Target 11.5 dan 11.B melalui penyediaan informasi risiko iklim yang inklusif, dapat diakses tanpa hambatan ekonomi/login, guna mengurangi kerugian aset masyarakat perkotaan.
+            </p>
+          </div>
+
+          <div class="card" style="background: rgba(63, 126, 68, 0.1); border-color: rgba(63, 126, 68, 0.3);">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <span class="sdg-pill sdg-13">SDG 13</span>
+              <h4 style="margin: 0; color: #4ade80;">Penanganan Perubahan Iklim</h4>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;">
+              Mendukung Target 13.1 dan 13.3 dengan memperkuat kapasitas adaptif komunitas dan meningkatkan pemahaman masyarakat terhadap anomali cuaca ekstrem tropis.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: Privacy by Design -->
+      <section class="card" style="margin-bottom: var(--space-8);">
+        <h2>5. Komitmen Privasi &amp; Desentralisasi</h2>
+        <p>
+          KotaTangguh dibangun dengan filosofi <em>Privacy by Design</em>:
+        </p>
+        <ul style="margin-bottom: 0;">
+          <li>Tidak memerlukan pembuatan akun, kata sandi, atau data identitas diri.</li>
+          <li>Semua preferensi kota dan kemajuan checklist disimpan eksklusif pada <code>localStorage</code> peramban Anda.</li>
+          <li>Fitur deteksi lokasi GPS hanya dijalankan atas izin klik eksplisit pengguna dan tidak pernah dikirim ke peladen pihak ketiga.</li>
+          <li>Nol skrip pelacak analitik invasif atau iklan komersial.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <!-- High-End Civic Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-group">
+            <div class="logo-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <span class="logo-title">KotaTangguh</span>
+          </div>
+          <p>
+            Platform edukasi dan ketahanan iklim perkotaan Indonesia. Mengadvokasi transparansi data cuaca terbuka untuk komunitas perkotaan yang tangguh dan adaptif.
+          </p>
+          <div class="sdg-badges" style="margin-top: var(--space-4);">
+            <span class="sdg-pill sdg-11">SDG 11: Kota Berkelanjutan</span>
+            <span class="sdg-pill sdg-13">SDG 13: Aksi Iklim</span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigasi</h4>
+          <ul>
+            <li><a href="/">Beranda</a></li>
+            <li><a href="/dashboard.html">Dashboard Cuaca</a></li>
+            <li><a href="/explore.html">Jelajahi Peta</a></li>
+            <li><a href="/preparedness.html">Pusat Siaga 72 Jam</a></li>
+            <li><a href="/climate-trends.html">Tren Iklim</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Data Terbuka</h4>
+          <ul>
+            <li><a href="https://data.bmkg.go.id" target="_blank" rel="noopener">BMKG Indonesia</a></li>
+            <li><a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo API</a></li>
+            <li><a href="https://www.openstreetmap.org" target="_blank" rel="noopener">OpenStreetMap</a></li>
+            <li><a href="/methodology.html">Metodologi &amp; Formula IKH</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Kesiapsiagaan</h4>
+          <ul>
+            <li><a href="https://bnpb.go.id" target="_blank" rel="noopener">BNPB Indonesia</a></li>
+            <li><a href="https://basarnas.go.id" target="_blank" rel="noopener">BASARNAS</a></li>
+            <li><a href="/preparedness.html#tsb">Tas Siaga Bencana</a></li>
+            <li><a href="/preparedness.html#kontak">Kontak Darurat 112</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 KotaTangguh • Lomba Nasional Web Desain 2026. Dikembangkan dengan prinsip Human-Centered UI/UX.</p>
+        <p class="mono" style="font-size: 0.75rem;">Status: BMKG Open API • CC BY 4.0 Open-Meteo • ODbL OpenStreetMap</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

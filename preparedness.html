@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pusat Siaga 72 Jam &amp; Kesiapsiagaan Warga — KotaTangguh</title>
+  <meta name="description" content="Pusat kesiapsiagaan darurat cuaca ekstrem dan simulasi Tas Siaga Bencana (TSB) 72 jam mandiri standar BNPB.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230ea5e9'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/pages.css">
+</head>
+<body>
+  <!-- Header Navigation -->
+  <header class="header">
+    <div class="container">
+      <a href="/" class="logo-group">
+        <div class="logo-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-title">KotaTangguh</span>
+          <span class="logo-subtitle">Climate Resilience</span>
+        </div>
+      </a>
+
+      <nav class="nav" id="main-nav">
+        <a href="/">Beranda</a>
+        <a href="/dashboard.html">Dashboard Cuaca</a>
+        <a href="/explore.html">Jelajahi Peta</a>
+        <a href="/preparedness.html" class="active">Pusat Siaga 72 Jam</a>
+        <a href="/climate-trends.html">Tren Iklim</a>
+        <a href="/methodology.html">Data &amp; Metodologi</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="nav-badge-live">
+          <span class="pulse-dot"></span>
+          <span>BMKG LIVE</span>
+        </div>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Buka Menu Navigasi">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <!-- Title & Utility Header -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--space-4); margin-bottom: var(--space-6);">
+        <div>
+          <span class="hero-tag">Panduan Aksi Komunitas Perkotaan</span>
+          <h1 style="margin-bottom: var(--space-2);">Pusat Kesiapsiagaan Mandiri 72 Jam</h1>
+          <p style="margin: 0; color: var(--text-secondary); max-width: 780px;">
+            Ketika bencana hidrometeorologi (banjir genangan, angin ribut, pohon tumbang) terjadi di kota, 72 jam pertama adalah masa paling krusial sebelum bantuan eksternal tiba merata.
+          </p>
+        </div>
+        <div style="display: flex; gap: var(--space-2);">
+          <button class="btn btn-secondary" id="btn-print" title="Cetak panduan untuk ditempel di rumah">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            <span>Cetak Panduan</span>
+          </button>
+          <button class="btn btn-outline" id="btn-reset">Reset Checklist</button>
+        </div>
+      </div>
+
+      <!-- Household Resilience Score Hero Card -->
+      <div class="score-hero-box">
+        <div style="max-width: 500px;">
+          <div class="badge status-normal" id="badge-rank">Tingkat: Warga Tanggap Mula</div>
+          <h2 style="margin: var(--space-2) 0; font-size: 1.75rem;">Indeks Ketahanan Rumah Tangga Anda</h2>
+          <p style="margin-bottom: var(--space-3); color: var(--text-secondary); font-size: 0.95rem;">
+            Checklist tersimpan otomatis di penyimpanan lokal browser Anda tanpa pengumpulan data pribadi. Centang langkah yang telah Anda lakukan:
+          </p>
+          <div class="progress-container" style="height: 14px; margin-bottom: 8px;">
+            <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.8125rem; color: var(--text-muted);" class="mono">
+            <span id="progress-text">0 / 25 Langkah Terpenuhi</span>
+            <span id="progress-percent" style="color: var(--primary-light); font-weight: 700;">0% Siaga</span>
+          </div>
+        </div>
+
+        <div style="text-align: center; padding: var(--space-4); background: rgba(12, 19, 34, 0.7); border-radius: var(--radius-lg); border: 1px solid var(--border-light); min-width: 170px;">
+          <div style="font-size: 0.8125rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Skor Kesiapan</div>
+          <div class="score-number-big" id="score-big">0%</div>
+          <div style="font-size: 0.75rem; color: var(--emerald-light); font-weight: 600;" id="score-status-desc">Ayo Lengkapi Checklist!</div>
+        </div>
+      </div>
+
+      <!-- Tas Siaga Bencana (TSB) Section (BNPB Standard) -->
+      <div class="card card-elevated" id="tsb" style="border-left: 4px solid var(--emerald); margin-bottom: var(--space-8);">
+        <div class="card-header">
+          <div>
+            <span class="badge badge-source badge-source-bmkg">Standar Resmi BNPB</span>
+            <h3 class="card-title" style="margin-top: 6px;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+              <span>Tas Siaga Bencana (TSB) Mandiri 72 Jam</span>
+            </h3>
+            <p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">
+              Satu tas ransel kedap air berisi perlengkapan bertahan hidup minimal 3 hari untuk seluruh anggota keluarga saat evakuasi mendesak.
+            </p>
+          </div>
+          <div class="badge status-notice" id="tsb-progress-badge">Kelengkapan TSB: 0%</div>
+        </div>
+
+        <div class="tsb-grid" id="tsb-items-container">
+          <!-- Dynamically populated from SURVIVAL_BAG_ITEMS -->
+        </div>
+      </div>
+
+      <!-- Actionable Mitigation Checklist by Phase -->
+      <div class="grid-2" style="margin-bottom: var(--space-8);">
+        <!-- Phase 1: Pra-Bencana -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              <span>1. Pra-Bencana (Sebelum Musim Hujan)</span>
+            </h3>
+            <span class="badge status-notice">Pencegahan</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: var(--space-4);">
+            Langkah preventif pada hunian dan saluran pembuangan air sebelum puncak musim penghujan tiba.
+          </p>
+          <div id="checklist-before"></div>
+        </div>
+
+        <!-- Phase 2: Tanggap Darurat -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span>2. Tanggap Darurat (Saat Hujan Deras &amp; Petir)</span>
+            </h3>
+            <span class="badge status-danger">Tindakan Cepat</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: var(--space-4);">
+            Protokol penyelamatan jiwa saat terjadi angin puting beliung, petir hebat, atau air mulai memasuki rumah.
+          </p>
+          <div id="checklist-during"></div>
+        </div>
+
+        <!-- Phase 3: Mobilitas & Perjalanan -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.5 3.5 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+              <span>3. Mobilitas &amp; Perjalanan di Kota</span>
+            </h3>
+            <span class="badge status-warning">Keselamatan Jalan</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: var(--space-4);">
+            Panduan berkendara aman dan navigasi menghindari underpass tergenang serta pohon tumbang di jalan raya.
+          </p>
+          <div id="checklist-travel"></div>
+        </div>
+
+        <!-- Phase 4: Kualitas Udara & Polusi -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
+              <span>4. Perlindungan Kualitas Udara (ISPU)</span>
+            </h3>
+            <span class="badge status-extreme">Kesehatan Saluran Napas</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: var(--space-4);">
+            Langkah antisipasi saat indeks polusi udara (PM2.5) berada di level Tidak Sehat hingga Berbahaya.
+          </p>
+          <div id="checklist-airquality"></div>
+        </div>
+      </div>
+
+      <!-- Emergency Directory Table -->
+      <div class="card card-elevated" id="kontak" style="border-top: 3px solid #ef4444; margin-bottom: var(--space-8);">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <span>Direktori Kontak Darurat Nasional Resmi</span>
+            </h3>
+            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">
+              Nomor panggilan darurat resmi pemerintah Republik Indonesia. Simpan di kontak cepat ponsel Anda.
+            </p>
+          </div>
+          <span class="badge status-danger">Bebas Pulsa / 24 Jam</span>
+        </div>
+
+        <div class="grid-3" id="emergency-contacts-grid">
+          <!-- Dynamically populated from EMERGENCY_CONTACTS -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- High-End Civic Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-group">
+            <div class="logo-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <span class="logo-title">KotaTangguh</span>
+          </div>
+          <p>
+            Platform edukasi dan ketahanan iklim perkotaan Indonesia. Mengadvokasi transparansi data cuaca terbuka untuk komunitas perkotaan yang tangguh dan adaptif.
+          </p>
+          <div class="sdg-badges" style="margin-top: var(--space-4);">
+            <span class="sdg-pill sdg-11">SDG 11: Kota Berkelanjutan</span>
+            <span class="sdg-pill sdg-13">SDG 13: Aksi Iklim</span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigasi</h4>
+          <ul>
+            <li><a href="/">Beranda</a></li>
+            <li><a href="/dashboard.html">Dashboard Cuaca</a></li>
+            <li><a href="/explore.html">Jelajahi Peta</a></li>
+            <li><a href="/preparedness.html">Pusat Siaga 72 Jam</a></li>
+            <li><a href="/climate-trends.html">Tren Iklim</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Data Terbuka</h4>
+          <ul>
+            <li><a href="https://data.bmkg.go.id" target="_blank" rel="noopener">BMKG Indonesia</a></li>
+            <li><a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo API</a></li>
+            <li><a href="https://www.openstreetmap.org" target="_blank" rel="noopener">OpenStreetMap</a></li>
+            <li><a href="/methodology.html">Metodologi &amp; Formula IKH</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Kesiapsiagaan</h4>
+          <ul>
+            <li><a href="https://bnpb.go.id" target="_blank" rel="noopener">BNPB Indonesia</a></li>
+            <li><a href="https://basarnas.go.id" target="_blank" rel="noopener">BASARNAS</a></li>
+            <li><a href="/preparedness.html#tsb">Tas Siaga Bencana</a></li>
+            <li><a href="/preparedness.html#kontak">Kontak Darurat 112</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 KotaTangguh • Lomba Nasional Web Desain 2026. Dikembangkan dengan prinsip Human-Centered UI/UX.</p>
+        <p class="mono" style="font-size: 0.75rem;">Status: BMKG Open API • CC BY 4.0 Open-Meteo • ODbL OpenStreetMap</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/js/pages/preparedness.js"></script>
+</body>
+</html>

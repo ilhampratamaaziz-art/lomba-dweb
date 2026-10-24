@@ -1,0 +1,152 @@
+<svg viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Deep Space Sky Gradient -->
+    <radialGradient id="spaceGradient" cx="50%" cy="30%" r="80%" fx="50%" fy="20%">
+      <stop offset="0%" stop-color="#070c18"/>
+      <stop offset="45%" stop-color="#050811"/>
+      <stop offset="100%" stop-color="#020408"/>
+    </radialGradient>
+
+    <!-- Planetary Atmosphere Glow -->
+    <radialGradient id="atmosphereGlow" cx="50%" cy="115%" r="70%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.45"/>
+      <stop offset="35%" stop-color="#0284c7" stop-opacity="0.25"/>
+      <stop offset="65%" stop-color="#0f172a" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#020408" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Earth Limb Glow (Ozone Layer) -->
+    <linearGradient id="ozoneLimb" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.9"/>
+      <stop offset="20%" stop-color="#0ea5e9" stop-opacity="0.7"/>
+      <stop offset="50%" stop-color="#0369a1" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#020617" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Ocean Body Gradient -->
+    <radialGradient id="oceanGrad" cx="50%" cy="100%" r="60%">
+      <stop offset="0%" stop-color="#0c2d48"/>
+      <stop offset="40%" stop-color="#081e35"/>
+      <stop offset="85%" stop-color="#040e1b"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </radialGradient>
+
+    <!-- Landmass Gradient (Indonesia Tropical Archipelago) -->
+    <linearGradient id="landGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14532d" stop-opacity="0.85"/>
+      <stop offset="50%" stop-color="#166534" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#0f3d24" stop-opacity="0.9"/>
+    </linearGradient>
+
+    <!-- City Night Lights Glow -->
+    <filter id="cityGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <filter id="coronaGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="15" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Deep Cosmos Background -->
+  <rect width="1920" height="1080" fill="url(#spaceGradient)"/>
+
+  <!-- Distant Stars & Cosmic Dust -->
+  <g fill="#ffffff" opacity="0.6">
+    <circle cx="120" cy="80" r="1"/>
+    <circle cx="280" cy="140" r="1.5" opacity="0.8"/>
+    <circle cx="450" cy="60" r="1"/>
+    <circle cx="620" cy="190" r="1.2"/>
+    <circle cx="780" cy="90" r="0.8"/>
+    <circle cx="950" cy="150" r="1.5" opacity="0.9"/>
+    <circle cx="1120" cy="70" r="1"/>
+    <circle cx="1340" cy="120" r="1.8" opacity="0.85"/>
+    <circle cx="1560" cy="85" r="1"/>
+    <circle cx="1750" cy="170" r="1.2"/>
+    <circle cx="1880" cy="95" r="0.8"/>
+    <!-- Second tier stars -->
+    <circle cx="180" cy="240" r="1.2"/>
+    <circle cx="340" cy="310" r="0.8"/>
+    <circle cx="530" cy="280" r="1.5" opacity="0.7"/>
+    <circle cx="820" cy="260" r="1"/>
+    <circle cx="1220" cy="290" r="1.2"/>
+    <circle cx="1480" cy="230" r="1"/>
+    <circle cx="1680" cy="310" r="1.4"/>
+  </g>
+
+  <!-- Outer Atmospheric Aura / Corona -->
+  <ellipse cx="960" cy="1350" rx="1400" ry="650" fill="url(#atmosphereGlow)" filter="url(#coronaGlow)"/>
+
+  <!-- Earth Curvature Limb (Orbital Horizon) -->
+  <path d="M-200 1350 Q960 620 2120 1350 L2120 1080 L-200 1080 Z" fill="url(#oceanGrad)"/>
+
+  <!-- Glowing Blue Ozone Ring / Atmospheric Horizon Line -->
+  <path d="M-200 1350 Q960 620 2120 1350" stroke="url(#ozoneLimb)" stroke-width="8" fill="none" filter="url(#coronaGlow)"/>
+  <path d="M-200 1350 Q960 620 2120 1350" stroke="#bae6fd" stroke-width="2.5" fill="none" opacity="0.9"/>
+
+  <!-- Indonesian Archipelago Silhouette from Space (Sumatera, Jawa, Kalimantan, Sulawesi, Papua) -->
+  <!-- Sumatera Island -->
+  <path d="M520 780 Q560 760 620 790 Q650 820 630 840 Q570 820 520 780 Z" fill="url(#landGrad)"/>
+  
+  <!-- Jawa Island -->
+  <path d="M640 850 Q720 860 840 865 Q830 875 740 870 Q650 865 640 850 Z" fill="url(#landGrad)"/>
+  
+  <!-- Kalimantan (Borneo) -->
+  <path d="M700 750 Q780 730 840 770 Q820 820 760 830 Q710 800 700 750 Z" fill="url(#landGrad)"/>
+
+  <!-- Sulawesi (Celebes) -->
+  <path d="M890 770 Q940 750 960 780 Q920 810 940 840 Q910 850 890 810 Q890 780 890 770 Z" fill="url(#landGrad)"/>
+
+  <!-- Bali, NTB, NTT Arc -->
+  <path d="M850 870 Q930 875 1040 880 Q980 890 870 885 Z" fill="url(#landGrad)"/>
+
+  <!-- Maluku Archipelago -->
+  <circle cx="1060" cy="790" r="14" fill="url(#landGrad)"/>
+  <circle cx="1090" cy="820" r="16" fill="url(#landGrad)"/>
+  <circle cx="1040" cy="830" r="12" fill="url(#landGrad)"/>
+
+  <!-- Papua (New Guinea West) -->
+  <path d="M1120 790 Q1220 780 1320 820 Q1310 860 1200 870 Q1140 840 1120 790 Z" fill="url(#landGrad)"/>
+
+  <!-- Swirling Tropical Cloud Formations (ITCZ / Monsun Tropis) -->
+  <g fill="#ffffff" opacity="0.18">
+    <path d="M400 720 Q600 680 850 720 Q750 760 550 750 Z"/>
+    <path d="M780 710 Q980 670 1200 700 Q1080 740 880 730 Z"/>
+    <path d="M620 810 Q820 830 1020 820 Q880 850 700 840 Z"/>
+    <path d="M1100 760 Q1300 740 1450 790 Q1320 830 1180 800 Z"/>
+  </g>
+
+  <!-- Nocturnal City Light Clusters (Jabodetabek, Surabaya, Bandung, Medan, Makassar) -->
+  <g fill="#fef08a" opacity="0.85" filter="url(#cityGlow)">
+    <!-- Jakarta / Jabodetabek Megacity -->
+    <circle cx="670" cy="855" r="4.5"/>
+    <circle cx="675" cy="857" r="3"/>
+    <circle cx="665" cy="854" r="2.5"/>
+    <!-- Bandung -->
+    <circle cx="695" cy="860" r="3.5"/>
+    <!-- Semarang -->
+    <circle cx="755" cy="863" r="3"/>
+    <!-- Surabaya -->
+    <circle cx="810" cy="864" r="4"/>
+    <!-- Medan -->
+    <circle cx="545" cy="775" r="3.5"/>
+    <!-- Palembang -->
+    <circle cx="615" cy="815" r="3"/>
+    <!-- Makassar -->
+    <circle cx="910" cy="835" r="3.5"/>
+    <!-- Denpasar Bali -->
+    <circle cx="865" cy="872" r="3"/>
+    <!-- Balikpapan / IKN -->
+    <circle cx="820" cy="805" r="3"/>
+  </g>
+
+  <!-- Orbital Telemetry Grid Lines -->
+  <g stroke="rgba(56,189,248,0.12)" stroke-width="1" stroke-dasharray="6 8">
+    <ellipse cx="960" cy="1350" rx="1460" ry="680" fill="none"/>
+    <ellipse cx="960" cy="1350" rx="1520" ry="710" fill="none"/>
+    <line x1="300" y1="400" x2="1620" y2="400"/>
+    <line x1="200" y1="600" x2="1720" y2="600"/>
+  </g>
+</svg>

@@ -1,0 +1,617 @@
+/* ==========================================================================
+   LANDING PAGE (index.html)
+   ========================================================================== */
+.hero {
+  position: relative;
+  padding: var(--space-16) 0 var(--space-12);
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero-earth-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at 50% 120%, rgba(56, 189, 248, 0.22) 0%, rgba(14, 165, 233, 0.08) 45%, transparent 75%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero .container {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 16px;
+  background: rgba(14, 165, 233, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--primary-light);
+  margin-bottom: var(--space-6);
+  backdrop-filter: blur(8px);
+}
+
+.hero h1 {
+  font-size: clamp(2.35rem, 5vw + 0.5rem, 4rem);
+  font-weight: 800;
+  line-height: 1.15;
+  max-width: 960px;
+  margin: 0 auto var(--space-6);
+  background: linear-gradient(135deg, #ffffff 40%, #bae6fd 75%, #34d399 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.03em;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 1.5vw + 0.5rem, 1.25rem);
+  color: var(--text-secondary);
+  max-width: 780px;
+  margin: 0 auto var(--space-8);
+  line-height: 1.65;
+}
+
+.hero-cta-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-10);
+}
+
+.hero-search-container {
+  max-width: 620px;
+  margin: 0 auto var(--space-10);
+}
+
+/* 38-Province National Telemetry Matrix */
+.prov-matrix-section {
+  margin-bottom: var(--space-12);
+}
+
+.prov-matrix-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.prov-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: var(--space-3);
+  max-height: 480px;
+  overflow-y: auto;
+  padding: 4px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  background: rgba(8, 13, 26, 0.65);
+  backdrop-filter: blur(14px);
+}
+
+.prov-tile {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.prov-tile:hover {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: var(--primary-light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.prov-tile-name {
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--text-pure);
+}
+
+.prov-tile-sub {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+}
+
+.prov-tile-temp {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary-light);
+}
+
+/* 4 Pillars Section */
+.section-title-center {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto var(--space-10);
+}
+
+.section-tag {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--emerald-light);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: inline-block;
+  margin-bottom: var(--space-2);
+}
+
+.pillar-card {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8) var(--space-6);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.pillar-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--emerald));
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.pillar-card:hover {
+  border-color: rgba(56, 189, 248, 0.35);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.pillar-card:hover::before {
+  opacity: 1;
+}
+
+.pillar-icon-box {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background: rgba(14, 165, 233, 0.12);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-4);
+  color: var(--primary-light);
+}
+
+.pillar-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: var(--space-2);
+}
+
+.pillar-card p {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* Architectural Resilience Infographic Banner */
+.resilience-banner {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(8, 13, 26, 0.92));
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: var(--radius-xl);
+  padding: var(--space-10);
+  margin: var(--space-12) 0;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+.resilience-diagram-svg {
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+/* ==========================================================================
+   DASHBOARD PAGE (dashboard.html)
+   ========================================================================== */
+.dashboard-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.location-hero-card {
+  background: linear-gradient(135deg, rgba(22, 34, 56, 0.82), rgba(12, 19, 34, 0.9));
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+}
+
+.location-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.location-main-name {
+  font-size: clamp(1.6rem, 3vw, 2.35rem);
+  font-weight: 800;
+  color: var(--text-pure);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.location-badges-row {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.location-time-badge {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--primary-light);
+  background: rgba(14, 165, 233, 0.12);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+
+.alert-banner {
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.alert-banner-warning {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+}
+
+.alert-banner-danger {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #f87171;
+}
+
+.current-weather-main {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  margin: var(--space-4) 0;
+}
+
+.current-weather-icon {
+  width: 72px;
+  height: 72px;
+  filter: drop-shadow(0 4px 14px rgba(14, 165, 233, 0.35));
+}
+
+.current-temp-big {
+  font-size: 3.5rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  line-height: 1;
+  color: var(--text-pure);
+}
+
+.current-desc-lead {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+/* 7 Day Outlook Grid */
+.forecast-7day-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.forecast-day-card {
+  background: rgba(11, 19, 38, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-3);
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.forecast-day-card:hover {
+  background: rgba(22, 34, 56, 0.95);
+  border-color: var(--primary-light);
+  transform: translateY(-2px);
+}
+
+.forecast-day-name {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-pure);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.forecast-day-date {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.forecast-day-icon {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto var(--space-2);
+}
+
+.forecast-temp-range {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.temp-max { color: #f87171; }
+.temp-min { color: #38bdf8; margin-left: 4px; }
+
+/* ==========================================================================
+   EXPLORE MAP PAGE (explore.html)
+   ========================================================================== */
+.map-container-wrapper {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+  margin-bottom: var(--space-6);
+}
+
+#map {
+  width: 100%;
+  height: 600px;
+  background: #050811;
+  z-index: 10;
+}
+
+.map-filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.filter-pills-group {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filter-pill {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filter-pill:hover,
+.filter-pill.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary-light);
+  box-shadow: 0 2px 10px rgba(14, 165, 233, 0.45);
+}
+
+/* Layer Switch Buttons for Satellite vs Dark Vector */
+.layer-toggle-group {
+  display: flex;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  gap: 3px;
+}
+
+.layer-btn {
+  padding: 5px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.layer-btn.active {
+  background: var(--primary);
+  color: white;
+}
+
+/* Custom Leaflet Map Pin Styles */
+.custom-city-pin {
+  background: rgba(8, 13, 26, 0.92);
+  border: 1.5px solid #0ea5e9;
+  border-radius: 20px;
+  padding: 3px 8px;
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.custom-city-pin:hover {
+  transform: scale(1.1);
+  border-color: #38bdf8;
+  z-index: 1000 !important;
+}
+
+/* Leaflet Dark Popup */
+.leaflet-popup-content-wrapper {
+  background: rgba(8, 13, 26, 0.96) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid rgba(56, 189, 248, 0.3) !important;
+  border-radius: var(--radius-md) !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+}
+
+.leaflet-popup-tip {
+  background: rgba(8, 13, 26, 0.96) !important;
+}
+
+/* ==========================================================================
+   PREPAREDNESS PAGE (preparedness.html)
+   ========================================================================== */
+.score-hero-box {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(14, 165, 233, 0.15));
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  margin-bottom: var(--space-8);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  backdrop-filter: blur(16px);
+}
+
+.score-number-big {
+  font-size: 3.5rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--emerald-light);
+  line-height: 1;
+}
+
+.tsb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+/* ==========================================================================
+   CLIMATE TRENDS PAGE (climate-trends.html)
+   ========================================================================== */
+.trends-filter-card {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.date-presets-row {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.chart-wrapper-card {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.chart-canvas-container {
+  position: relative;
+  height: 340px;
+  width: 100%;
+}
+
+/* ==========================================================================
+   METHODOLOGY PAGE (methodology.html)
+   ========================================================================== */
+.formula-box {
+  background: rgba(5, 8, 18, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-6);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--primary-light);
+  margin: var(--space-4) 0;
+  overflow-x: auto;
+}
+
+/* Print Stylesheet for Emergency Checklist */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .header, .footer, .btn, .nav, .search-wrapper, #map {
+    display: none !important;
+  }
+  .card, .check-card {
+    border: 1px solid #ccc !important;
+    background: none !important;
+    color: black !important;
+    break-inside: avoid;
+  }
+  h1, h2, h3, h4 {
+    color: black !important;
+  }
+}

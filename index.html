@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KotaTangguh — Observatorium Ketahanan Iklim &amp; Cuaca 38 Provinsi Indonesia</title>
+  <meta name="description" content="Platform observasi cuaca dan ketahanan iklim perkotaan mencakup 38 provinsi di Indonesia berbasis data terbuka BMKG dan Open-Meteo. Lomba Nasional Web Desain 2026.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230ea5e9'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/pages.css">
+</head>
+<body>
+  <!-- Header Navigation -->
+  <header class="header">
+    <div class="container">
+      <a href="/" class="logo-group">
+        <div class="logo-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-title">KotaTangguh</span>
+          <span class="logo-subtitle">Climate Resilience</span>
+        </div>
+      </a>
+
+      <nav class="nav" id="main-nav">
+        <a href="/" class="active">Beranda</a>
+        <a href="/dashboard.html">Dashboard Cuaca</a>
+        <a href="/explore.html">Peta Satelit 38 Provinsi</a>
+        <a href="/preparedness.html">Pusat Siaga 72 Jam</a>
+        <a href="/climate-trends.html">Tren Iklim</a>
+        <a href="/methodology.html">Data &amp; Metodologi</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="nav-badge-live">
+          <span class="pulse-dot"></span>
+          <span>BMKG LIVE</span>
+        </div>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Buka Menu Navigasi">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section with Earth Atmosphere Backdrop -->
+    <section class="hero">
+      <div class="hero-earth-overlay"></div>
+      <div class="container">
+        <div class="hero-tag">
+          Observatorium Iklim 38 Provinsi &bull; SDG 11 &amp; SDG 13
+        </div>
+        <h1>Ketahanan Iklim Tropis Nusantara.<br>Pantau 38 Provinsi Se-Indonesia.</h1>
+        <p class="hero-subtitle">
+          Platform intelijen iklim dan cuaca perkotaan yang menyatukan data satelit meteorologi, prakiraan resmi BMKG per kelurahan, reanalisis Open-Meteo, formula Indikator Kewaspadaan Hujan (IKH), dan kesiapsiagaan bencana hidrometeorologi warga kota.
+        </p>
+
+        <!-- Search Bar with Live Geocoding for all 38 provinces -->
+        <div class="hero-search-container">
+          <div class="search-wrapper">
+            <div class="search-input-group">
+              <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="search" id="search-hero" class="search-input" placeholder="Cari nama provinsi, kota, atau kabupaten (contoh: Jakarta, Banda Aceh, Jayapura)..." autocomplete="off">
+            </div>
+            <div class="search-results hidden" id="search-results-hero"></div>
+          </div>
+        </div>
+
+        <div class="hero-cta-group">
+          <a href="/dashboard.html" class="btn btn-primary btn-lg">
+            <span>Buka Dashboard Cuaca</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="/explore.html" class="btn btn-secondary btn-lg">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="12 8 8 12 12 16 12 8"></polygon></svg>
+            <span>Peta Satelit Resolusi Tinggi</span>
+          </a>
+          <a href="/preparedness.html" class="btn btn-outline btn-lg">
+            <span>Pusat Siaga 72 Jam</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 38-Province National Telemetry Matrix -->
+    <section class="prov-matrix-section">
+      <div class="container">
+        <div class="card card-elevated" style="border-top: 3px solid var(--primary);">
+          <div class="prov-matrix-header">
+            <div>
+              <span class="badge badge-source badge-source-bmkg">Data Riil 38 Provinsi Nusantara</span>
+              <h3 style="margin: 6px 0 2px;">Telemetri Cuaca 38 Ibukota Provinsi (Sabang &ndash; Merauke)</h3>
+              <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">
+                Pilih wilayah untuk memfilter atau klik salah satu kartu provinsi untuk membuka dashboard detailnya:
+              </p>
+            </div>
+            <div class="filter-pills-group" id="home-filter-pills">
+              <button class="filter-pill active" data-region="all">Semua (38)</button>
+              <button class="filter-pill" data-region="Sumatera">Sumatera</button>
+              <button class="filter-pill" data-region="Jawa">Jawa</button>
+              <button class="filter-pill" data-region="Bali & Nusa Tenggara">Bali &amp; Nusra</button>
+              <button class="filter-pill" data-region="Kalimantan">Kalimantan</button>
+              <button class="filter-pill" data-region="Sulawesi">Sulawesi</button>
+              <button class="filter-pill" data-region="Maluku">Maluku</button>
+              <button class="filter-pill" data-region="Papua">Papua</button>
+            </div>
+          </div>
+
+          <div class="prov-matrix-grid" id="prov-matrix-grid">
+            <!-- Dynamically populated with all 38 provinces -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive IKH Simulator Card (Mathematical transparency, no AI buzzwords) -->
+    <section class="simulator-section">
+      <div class="container">
+        <div class="card card-elevated" style="border-color: rgba(56, 189, 248, 0.35);">
+          <div class="card-header">
+            <div>
+              <span class="badge badge-source">Algoritma Resiliensi Iklim</span>
+              <h3 style="margin-top: 6px;">Simulasi Matematis Indikator Kewaspadaan Hujan (IKH)</h3>
+              <p style="margin: 0; font-size: 0.875rem; color: var(--text-secondary);">
+                Uji model kuantitatif IKH: geser parameter meteorologis di bawah untuk mengamati bagaimana indeks merespon probabilitas, presipitasi, dan angin permukaan secara real-time:
+              </p>
+            </div>
+            <a href="/methodology.html" class="btn btn-outline btn-sm">Buka Formula Lengkap →</a>
+          </div>
+
+          <div class="grid-2" style="align-items: center; margin-top: var(--space-4);">
+            <div>
+              <div style="margin-bottom: var(--space-4);">
+                <div style="display: flex; justify-content: space-between; font-size: 0.875rem; margin-bottom: 4px;">
+                  <span>Probabilitas Presipitasi (Bobot 35%):</span>
+                  <span id="sim-prob-val" class="mono" style="color: var(--primary-light); font-weight: 700;">60%</span>
+                </div>
+                <input type="range" id="sim-prob" min="0" max="100" value="60" style="width: 100%; accent-color: var(--primary);">
+              </div>
+
+              <div style="margin-bottom: var(--space-4);">
+                <div style="display: flex; justify-content: space-between; font-size: 0.875rem; margin-bottom: 4px;">
+                  <span>Estimasi Akumulasi Hujan 6 Jam (Bobot 30%):</span>
+                  <span id="sim-rain-val" class="mono" style="color: var(--primary-light); font-weight: 700;">12 mm</span>
+                </div>
+                <input type="range" id="sim-rain" min="0" max="40" value="12" step="1" style="width: 100%; accent-color: var(--primary);">
+              </div>
+
+              <div style="margin-bottom: var(--space-4);">
+                <div style="display: flex; justify-content: space-between; font-size: 0.875rem; margin-bottom: 4px;">
+                  <span>Kecepatan Angin Puncak Permukaan (Bobot 15%):</span>
+                  <span id="sim-wind-val" class="mono" style="color: var(--primary-light); font-weight: 700;">22 km/h</span>
+                </div>
+                <input type="range" id="sim-wind" min="0" max="60" value="22" step="1" style="width: 100%; accent-color: var(--primary);">
+              </div>
+            </div>
+
+            <!-- Dynamic Result Box -->
+            <div class="card" id="sim-result-box" style="background: rgba(12, 19, 34, 0.7); border: 1px solid var(--status-warning-border);">
+              <div class="ikh-gauge-container" style="padding: 0;">
+                <div class="ikh-circle" id="sim-gauge-circle" style="background: rgba(245, 158, 11, 0.15); border: 3px solid #f59e0b;">
+                  <span class="ikh-score" id="sim-score">58</span>
+                  <span class="ikh-scale">/100</span>
+                </div>
+                <div class="ikh-details">
+                  <div class="badge status-warning" id="sim-badge" style="margin-bottom: 6px;">Kategori: Perlu Diperhatikan</div>
+                  <h4 id="sim-title" style="margin-bottom: 4px; color: var(--text-pure);">Waspada Hujan Sedang</h4>
+                  <p id="sim-advice" style="font-size: 0.85rem; margin: 0; color: var(--text-secondary);">
+                    Siapkan jas hujan dan payung. Hindari rute rawan genangan dan underpass kota.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 Pillars Section -->
+    <section class="pillars-section">
+      <div class="container">
+        <div class="section-title-center">
+          <span class="section-tag">Arsitektur Tata Kelola Data</span>
+          <h2>4 Pilar Ketahanan Iklim Kota Cerdas</h2>
+          <p>Dirancang untuk menghadapi tantangan nyata perkotaan kepulauan: banjir limpasan hujan tropis, pasang rob pesisir, dan penurunan kualitas udara akibat polusi PM2.5.</p>
+        </div>
+
+        <div class="grid-4">
+          <div class="pillar-card">
+            <div class="pillar-icon-box">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <h3>Prakiraan BMKG 38 Provinsi</h3>
+            <p>Data resmi BMKG per kelurahan mencakup 38 provinsi di Indonesia dengan linimasa prakiraan per 3 jam dan ikon cuaca resmi.</p>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-icon-box">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="m4.93 4.93 4.24 4.24"></path><path d="m14.83 9.17 4.24-4.24"></path><path d="m14.83 14.83 4.24 4.24"></path><path d="m9.17 14.83-4.24 4.24"></path></svg>
+            </div>
+            <h3>Indikator Kuantitatif Terbuka</h3>
+            <p>Formula IKH terbuka secara ilmiah menyintesiskan multi-parameter cuaca ke dalam angka risiko yang mudah dipahami warga.</p>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-icon-box">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            </div>
+            <h3>Pusat Siaga 72 Jam Mandiri</h3>
+            <p>Simulasi Tas Siaga Bencana (TSB) standar BNPB dan checklist aksi kesiapan keluarga tersimpan aman di browser.</p>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-icon-box">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+            </div>
+            <h3>Arsip Iklim Longitudinal</h3>
+            <p>Visualisasi reanalisis cuaca historis ERA5 untuk menganalisis pergeseran anomali iklim dan mengekspor data ke file spreadsheet CSV.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resilient Urban Architecture Infographic Banner -->
+    <section class="container">
+      <div class="resilience-banner">
+        <div>
+          <span class="section-tag">Infrastruktur Berkelanjutan</span>
+          <h2>Integrasi Ekosistem Ketahanan Kota Tropis</h2>
+          <p>
+            KotaTangguh menghubungkan masyarakat dengan infrastruktur mitigasi perkotaan: kolam retensi air hujan, atap hijau (green roofs), sensor mikroklimat cerdas, dan jalur komunikasi tanggap darurat BNPB.
+          </p>
+          <ul style="list-style: none; margin-left: 0; padding: 0;">
+            <li style="display: flex; gap: 10px; margin-bottom: 10px;">
+              <span style="color: var(--emerald-light); font-weight: bold;">✓</span>
+              <span><strong>SDG 11 (Kota Berkelanjutan):</strong> Meningkatkan kapasitas mitigasi bencana hidrometeorologi warga kota.</span>
+            </li>
+            <li style="display: flex; gap: 10px; margin-bottom: 10px;">
+              <span style="color: var(--emerald-light); font-weight: bold;">✓</span>
+              <span><strong>SDG 13 (Aksi Iklim):</strong> Memperkuat ketahanan adaptif terhadap frekuensi cuaca ekstrem yang meningkat.</span>
+            </li>
+            <li style="display: flex; gap: 10px;">
+              <span style="color: var(--emerald-light); font-weight: bold;">✓</span>
+              <span><strong>Privasi &amp; Desentralisasi:</strong> Data tersimpan lokal di peramban tanpa pelacak identitas atau data pribadi.</span>
+            </li>
+          </ul>
+          <div style="margin-top: var(--space-6);">
+            <a href="/dashboard.html" class="btn btn-primary">Mulai Pantau Kota Anda Sekarang</a>
+          </div>
+        </div>
+        <div style="text-align: center;">
+          <img src="/assets/images/resilience-diagram.svg" alt="Diagram Arsitektur Ketahanan Kota Cerdas KotaTangguh" class="resilience-diagram-svg">
+        </div>
+      </div>
+    </section>
+
+    <!-- Emergency Hotline Quick Band -->
+    <section class="container" style="margin-bottom: var(--space-12);">
+      <div class="card card-elevated" style="background: rgba(15, 23, 42, 0.85); border-color: rgba(239, 68, 68, 0.3);">
+        <div class="card-header" style="margin-bottom: var(--space-3);">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <div>
+              <h3 style="margin: 0; font-size: 1.125rem;">Kontak Siaga Bencana &amp; Darurat Indonesia</h3>
+              <p style="margin: 0; font-size: 0.8125rem; color: var(--text-muted);">Akses darurat langsung bebas pulsa untuk penyelamatan jiwa dan penanganan bencana.</p>
+            </div>
+          </div>
+          <a href="/preparedness.html" class="btn btn-outline btn-sm">Lihat Panduan 72 Jam Lengkap →</a>
+        </div>
+        <div class="grid-4" style="margin-bottom: 0;">
+          <a href="tel:112" class="hotline-card">
+            <div class="hotline-info">
+              <h4>Darurat Umum</h4>
+              <p>Ambulans &amp; Polisi</p>
+            </div>
+            <div class="hotline-number">112</div>
+          </a>
+          <a href="tel:117" class="hotline-card">
+            <div class="hotline-info">
+              <h4>BNPB RI</h4>
+              <p>Pusdalops Bencana</p>
+            </div>
+            <div class="hotline-number">117</div>
+          </a>
+          <a href="tel:115" class="hotline-card">
+            <div class="hotline-info">
+              <h4>BASARNAS</h4>
+              <p>Evakuasi &amp; SAR</p>
+            </div>
+            <div class="hotline-number">115</div>
+          </a>
+          <a href="tel:119" class="hotline-card">
+            <div class="hotline-info">
+              <h4>Medis SPGDT</h4>
+              <p>Kemenkes RI</p>
+            </div>
+            <div class="hotline-number">119</div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- High-End Civic Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-group">
+            <div class="logo-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <span class="logo-title">KotaTangguh</span>
+          </div>
+          <p>
+            Platform edukasi dan ketahanan iklim perkotaan Indonesia. Mengadvokasi transparansi data cuaca terbuka untuk komunitas perkotaan yang tangguh dan adaptif di 38 provinsi Nusantara.
+          </p>
+          <div class="sdg-badges" style="margin-top: var(--space-4);">
+            <span class="sdg-pill sdg-11">SDG 11: Kota Berkelanjutan</span>
+            <span class="sdg-pill sdg-13">SDG 13: Aksi Iklim</span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigasi</h4>
+          <ul>
+            <li><a href="/">Beranda</a></li>
+            <li><a href="/dashboard.html">Dashboard Cuaca</a></li>
+            <li><a href="/explore.html">Peta Satelit 38 Provinsi</a></li>
+            <li><a href="/preparedness.html">Pusat Siaga 72 Jam</a></li>
+            <li><a href="/climate-trends.html">Tren Iklim</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Data Terbuka</h4>
+          <ul>
+            <li><a href="https://data.bmkg.go.id" target="_blank" rel="noopener">BMKG Indonesia</a></li>
+            <li><a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo API</a></li>
+            <li><a href="https://www.openstreetmap.org" target="_blank" rel="noopener">OpenStreetMap</a></li>
+            <li><a href="/methodology.html">Metodologi &amp; Formula IKH</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Kesiapsiagaan</h4>
+          <ul>
+            <li><a href="https://bnpb.go.id" target="_blank" rel="noopener">BNPB Indonesia</a></li>
+            <li><a href="https://basarnas.go.id" target="_blank" rel="noopener">BASARNAS</a></li>
+            <li><a href="/preparedness.html#tsb">Tas Siaga Bencana</a></li>
+            <li><a href="/preparedness.html#kontak">Kontak Darurat 112</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 KotaTangguh • Lomba Nasional Web Desain 2026. Dikembangkan dengan prinsip Human-Centered UI/UX.</p>
+        <p class="mono" style="font-size: 0.75rem;">Status: BMKG Open API • CC BY 4.0 Open-Meteo • ODbL OpenStreetMap</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

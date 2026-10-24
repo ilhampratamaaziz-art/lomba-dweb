@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Cuaca &amp; Ketahanan Iklim — KotaTangguh</title>
+  <meta name="description" content="Dashboard cuaca komprehensif terintegrasi BMKG dan Open-Meteo dengan Indikator Kewaspadaan Hujan (IKH) dan Kualitas Udara ISPU.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230ea5e9'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+  <script type="module" crossorigin src="/assets/dashboard-Do2nde7I.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/pages-0P5Txbp4.js">
+  <link rel="modulepreload" crossorigin href="/assets/openmeteo-weather-Bj35Lj7e.js">
+  <link rel="modulepreload" crossorigin href="/assets/geocoding-w-Y3ODyd.js">
+  <link rel="modulepreload" crossorigin href="/assets/chart-bkSZlCes.js">
+  <link rel="stylesheet" crossorigin href="/assets/pages-C66s7fnm.css">
+</head>
+<body>
+  <!-- Header Navigation -->
+  <header class="header">
+    <div class="container">
+      <a href="/" class="logo-group">
+        <div class="logo-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-title">KotaTangguh</span>
+          <span class="logo-subtitle">Climate Resilience</span>
+        </div>
+      </a>
+
+      <nav class="nav" id="main-nav">
+        <a href="/">Beranda</a>
+        <a href="/dashboard.html" class="active">Dashboard Cuaca</a>
+        <a href="/explore.html">Jelajahi Peta</a>
+        <a href="/preparedness.html">Pusat Siaga 72 Jam</a>
+        <a href="/climate-trends.html">Tren Iklim</a>
+        <a href="/methodology.html">Data &amp; Metodologi</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="nav-badge-live">
+          <span class="pulse-dot"></span>
+          <span>BMKG LIVE</span>
+        </div>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Buka Menu Navigasi">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <!-- Location Selector & GPS Bar -->
+      <div class="dashboard-header-bar">
+        <div class="search-wrapper" style="max-width: 480px;">
+          <div class="search-input-group">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="search" id="search-location" class="search-input" placeholder="Cari kota, kelurahan, atau kecamatan di Indonesia..." autocomplete="off">
+          </div>
+          <div class="search-results hidden" id="search-results"></div>
+        </div>
+
+        <div style="display: flex; gap: var(--space-2); align-items: center; flex-wrap: wrap;">
+          <!-- 38 Provinces Preset Dropdown -->
+          <select id="preset-cities" class="search-input" style="width: auto; padding: 0.625rem 1rem; border-radius: var(--radius-md); background: var(--bg-surface-elevated);">
+            <option value="">-- Pilih 38 Provinsi Indonesia --</option>
+            <optgroup label="Pulau Jawa (6 Provinsi)">
+              <option value="dki-jakarta">DKI Jakarta — Jakarta Pusat (Gambir)</option>
+              <option value="jawa-barat">Jawa Barat — Bandung (Pasteur)</option>
+              <option value="banten">Banten — Serang (Kotabaru)</option>
+              <option value="jawa-tengah">Jawa Tengah — Semarang (Randusari)</option>
+              <option value="di-yogyakarta">DI Yogyakarta — Yogyakarta (Suryatmajan)</option>
+              <option value="jawa-timur">Jawa Timur — Surabaya (Genteng)</option>
+            </optgroup>
+            <optgroup label="Pulau Sumatera (10 Provinsi)">
+              <option value="aceh">Aceh — Banda Aceh</option>
+              <option value="sumatera-utara">Sumatera Utara — Medan (Pasar Baru)</option>
+              <option value="sumatera-barat">Sumatera Barat — Padang (Belakang Pondok)</option>
+              <option value="riau">Riau — Pekanbaru</option>
+              <option value="kepulauan-riau">Kepulauan Riau — Tanjung Pinang</option>
+              <option value="jambi">Jambi — Jambi (Pasar Jambi)</option>
+              <option value="sumatera-selatan">Sumatera Selatan — Palembang (Ilir Timur)</option>
+              <option value="bangka-belitung">Kep. Bangka Belitung — Pangkal Pinang</option>
+              <option value="bengkulu">Bengkulu — Bengkulu (Malabero)</option>
+              <option value="lampung">Lampung — Bandar Lampung</option>
+            </optgroup>
+            <optgroup label="Bali & Nusa Tenggara (3 Provinsi)">
+              <option value="bali">Bali — Denpasar (Serangan)</option>
+              <option value="nusa-tenggara-barat">Nusa Tenggara Barat — Mataram</option>
+              <option value="nusa-tenggara-timur">Nusa Tenggara Timur — Kupang</option>
+            </optgroup>
+            <optgroup label="Pulau Kalimantan (5 Provinsi)">
+              <option value="kalimantan-barat">Kalimantan Barat — Pontianak</option>
+              <option value="kalimantan-tengah">Kalimantan Tengah — Palangka Raya</option>
+              <option value="kalimantan-selatan">Kalimantan Selatan — Banjarmasin (Mantuil)</option>
+              <option value="kalimantan-timur">Kalimantan Timur — Samarinda</option>
+              <option value="kalimantan-utara">Kalimantan Utara — Tanjung Selor</option>
+            </optgroup>
+            <optgroup label="Pulau Sulawesi (6 Provinsi)">
+              <option value="sulawesi-utara">Sulawesi Utara — Manado (Molas)</option>
+              <option value="gorontalo">Gorontalo — Gorontalo</option>
+              <option value="sulawesi-tengah">Sulawesi Tengah — Palu</option>
+              <option value="sulawesi-barat">Sulawesi Barat — Mamuju</option>
+              <option value="sulawesi-selatan">Sulawesi Selatan — Makassar (Pattunuang)</option>
+              <option value="sulawesi-tenggara">Sulawesi Tenggara — Kendari</option>
+            </optgroup>
+            <optgroup label="Kepulauan Maluku (2 Provinsi)">
+              <option value="maluku">Maluku — Ambon (Honipopu)</option>
+              <option value="maluku-utara">Maluku Utara — Sofifi / Ternate</option>
+            </optgroup>
+            <optgroup label="Tanah Papua (6 Provinsi)">
+              <option value="papua">Papua — Jayapura (Gurabesi)</option>
+              <option value="papua-barat">Papua Barat — Manokwari</option>
+              <option value="papua-barat-daya">Papua Barat Daya — Sorong</option>
+              <option value="papua-tengah">Papua Tengah — Nabire</option>
+              <option value="papua-pegunungan">Papua Pegunungan — Wamena (Lembah Baliem)</option>
+              <option value="papua-selatan">Papua Selatan — Merauke</option>
+            </optgroup>
+          </select>
+
+          <!-- GPS Current Location Button -->
+          <button class="btn btn-secondary" id="btn-gps" title="Gunakan Lokasi GPS Terkini">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span>Lokasi Saya</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Current Location Meta Card -->
+      <div id="location-card" class="location-hero-card">
+        <div class="location-title-row">
+          <div>
+            <h1 class="location-main-name" id="location-name">Jakarta Pusat</h1>
+            <p id="location-context" style="margin: 4px 0 0; color: var(--text-muted); font-size: 0.95rem;">
+              Desa Gambir, Kota Adm. Jakarta Pusat • DKI Jakarta
+            </p>
+          </div>
+          <div class="location-badges-row">
+            <span class="badge badge-source badge-source-bmkg" id="badge-adm4">ADM4: 31.71.01.1001</span>
+            <span class="location-time-badge mono" id="location-time">WIB --:--:--</span>
+            <span class="mono" style="font-size: 0.8125rem; color: var(--text-muted);" id="location-coords">-6.1764°, 106.8267°</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- High Alert Notification Banner (Dynamically shown when IKH or AQI is elevated) -->
+      <div id="alert-banner" class="alert-banner hidden">
+        <span style="font-size: 1.5rem;" id="alert-icon">⚠️</span>
+        <div style="flex: 1;">
+          <div id="alert-title" style="font-size: 1rem; font-weight: 700;">Peringatan Cuaca Aktif</div>
+          <div id="alert-message" style="font-size: 0.875rem; font-weight: normal;">Potensi hujan lebat disertai angin kencang dalam rentang 6 jam ke depan.</div>
+        </div>
+        <a href="/preparedness.html" class="btn btn-sm btn-primary">Lihat Tindakan Siaga →</a>
+      </div>
+
+      <!-- Main Weather Comparison Grid (BMKG vs Open-Meteo) -->
+      <div class="grid-2">
+        <!-- Official BMKG Card -->
+        <div class="card card-elevated" style="border-top: 3px solid var(--emerald);">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+              <span>Prakiraan Resmi BMKG</span>
+            </h3>
+            <span class="badge badge-source badge-source-bmkg">BMKG Terbuka</span>
+          </div>
+
+          <div id="bmkg-forecast-content">
+            <div class="current-weather-main">
+              <img id="bmkg-icon" src="https://api-apps.bmkg.go.id/storage/icon/cuaca/berawan-pm.svg" alt="Icon BMKG" class="current-weather-icon">
+              <div>
+                <div class="current-temp-big"><span id="bmkg-temp">--</span><span style="font-size: 2rem; color: var(--text-muted);">°C</span></div>
+                <div class="current-desc-lead" id="bmkg-desc">Memuat data BMKG...</div>
+                <div style="font-size: 0.8125rem; color: var(--text-muted);" id="bmkg-period-time">—</div>
+              </div>
+            </div>
+
+            <!-- Sub Metrics Grid -->
+            <div class="metrics-row">
+              <div class="metric-tile">
+                <div class="metric-label">Kelembapan</div>
+                <div class="metric-value"><span id="bmkg-humidity">--</span><span class="metric-unit">%</span></div>
+              </div>
+              <div class="metric-tile">
+                <div class="metric-label">Kecepatan Angin</div>
+                <div class="metric-value"><span id="bmkg-wind-speed">--</span><span class="metric-unit">km/h</span></div>
+              </div>
+              <div class="metric-tile">
+                <div class="metric-label">Arah Angin</div>
+                <div class="metric-value" style="font-size: 1.1rem;" id="bmkg-wind-dir">--</div>
+              </div>
+              <div class="metric-tile">
+                <div class="metric-label">Tutupan Awan</div>
+                <div class="metric-value"><span id="bmkg-cloud-cover">--</span><span class="metric-unit">%</span></div>
+              </div>
+            </div>
+
+            <!-- 3-Hour Period Timeline Horizontal Scroll -->
+            <div style="margin-top: var(--space-4);">
+              <div style="font-size: 0.8125rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">
+                Prakiraan BMKG Tiap 3 Jam:
+              </div>
+              <div class="hourly-scroll" id="bmkg-timeline-container">
+                <!-- Dynamically populated periods -->
+                <div style="padding: 1rem; color: var(--text-muted); font-size: 0.85rem;">Memuat linimasa cuaca...</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: var(--space-3); font-size: 0.75rem; color: var(--text-muted);" id="bmkg-meta-info">
+            Sumber: API Resmi BMKG • Update 2x sehari per kelurahan
+          </div>
+        </div>
+
+        <!-- Open-Meteo High-Resolution Model Card -->
+        <div class="card card-elevated" style="border-top: 3px solid var(--primary);">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+              <span>Model Global Open-Meteo</span>
+            </h3>
+            <span class="badge badge-source badge-source-openmeteo">ECMWF / DWD</span>
+          </div>
+
+          <div id="openmeteo-content">
+            <div class="current-weather-main">
+              <div style="font-size: 3.5rem; line-height: 1;" id="openmeteo-icon-emoji">⛅</div>
+              <div>
+                <div class="current-temp-big"><span id="openmeteo-temp">--</span><span style="font-size: 2rem; color: var(--text-muted);">°C</span></div>
+                <div class="current-desc-lead" id="openmeteo-desc">Memuat data Open-Meteo...</div>
+                <div style="font-size: 0.8125rem; color: var(--text-muted);">Terasa Seperti: <span id="openmeteo-apparent" class="mono" style="color: var(--text-primary); font-weight: 600;">--°C</span></div>
+              </div>
+            </div>
+
+            <!-- Sub Metrics Grid -->
+            <div class="metrics-row">
+              <div class="metric-tile">
+                <div class="metric-label">Curah Hujan</div>
+                <div class="metric-value"><span id="openmeteo-precip">0.0</span><span class="metric-unit">mm</span></div>
+              </div>
+              <div class="metric-tile">
+                <div class="metric-label">Hembusan Angin</div>
+                <div class="metric-value"><span id="openmeteo-gusts">--</span><span class="metric-unit">km/h</span></div>
+              </div>
+              <div class="metric-tile">
+                <div class="metric-label">Tekanan Udara</div>
+                <div class="metric-value"><span id="openmeteo-pressure">--</span><span class="metric-unit">hPa</span></div>
+              </div>
+              <div class="metric-tile">
+                <div class="metric-label">Indeks UV</div>
+                <div class="metric-value"><span id="openmeteo-uv">--</span><span class="metric-unit">UV</span></div>
+              </div>
+            </div>
+
+            <!-- Live Air Quality (ISPU / US-AQI) Inline Box -->
+            <div class="card" style="background: rgba(12, 19, 34, 0.7); margin-top: var(--space-4); padding: var(--space-4); border: 1px solid var(--border);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span style="font-size: 0.8125rem; font-weight: 700; color: var(--text-pure);">Kualitas Udara Real-Time (CAMS / ISPU):</span>
+                <span class="badge" id="aqi-badge">Memuat AQI...</span>
+              </div>
+              <div class="aqi-bar-wrapper">
+                <div class="aqi-bar">
+                  <div class="aqi-pin" id="aqi-pin" style="left: 20%;"></div>
+                </div>
+                <div class="aqi-labels">
+                  <span>Baik (0)</span>
+                  <span>Sedang (50)</span>
+                  <span>Tidak Sehat (150)</span>
+                  <span>Berbahaya (300+)</span>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.8125rem; color: var(--text-muted); margin-top: 6px;">
+                <span>PM2.5: <strong id="aqi-pm25" style="color: var(--text-pure);">-- µg/m³</strong></span>
+                <span>PM10: <strong id="aqi-pm10" style="color: var(--text-pure);">-- µg/m³</strong></span>
+                <span id="aqi-recommendation" style="color: var(--primary-light);">—</span>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: var(--space-3); font-size: 0.75rem; color: var(--text-muted);" id="openmeteo-meta-info">
+            Sumber: Model CAMS &amp; Global Forecast • Resolusi tinggi
+          </div>
+        </div>
+      </div>
+
+      <!-- Indikator Kewaspadaan Hujan (IKH) Card -->
+      <div class="card card-elevated" style="margin-bottom: var(--space-6); border-left: 4px solid var(--primary);">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span>Indikator Kewaspadaan Hujan (IKH) Kota</span>
+            </h3>
+            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">
+              Sintesis multivariat ilmiah untuk memandu kesiapsiagaan warga menghadapi potensi cuaca ekstrem 6 jam ke depan.
+            </p>
+          </div>
+          <button class="btn btn-outline btn-sm" id="btn-toggle-factors">Detail Komponen Formula ▾</button>
+        </div>
+
+        <div class="ikh-gauge-container">
+          <div class="ikh-circle" id="ikh-circle" style="background: rgba(16, 185, 129, 0.15); border: 4px solid #10b981;">
+            <span class="ikh-score" id="ikh-score">--</span>
+            <span class="ikh-scale">/100</span>
+          </div>
+          <div class="ikh-details">
+            <div class="badge status-normal" id="ikh-category-badge" style="margin-bottom: 6px; font-size: 0.8125rem;">
+              Status: Memuat...
+            </div>
+            <div class="ikh-message" id="ikh-message">
+              Sedang menganalisis parameter cuaca...
+            </div>
+            <div id="ikh-action-list" style="margin-top: var(--space-2);">
+              <!-- Action items populated dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Collapsible Factors List -->
+        <div id="factors-panel" class="hidden" style="margin-top: var(--space-4); border-top: 1px solid var(--border); padding-top: var(--space-4);">
+          <h4 style="font-size: 0.95rem; margin-bottom: var(--space-3);">Faktor Matematis Penentu Indeks:</h4>
+          <div id="factors-list">
+            <!-- Dynamically populated -->
+          </div>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: var(--space-3);">
+            *Status eksperimental: IKH merupakan indikator kewaspadaan edukatif KotaTangguh, bukan peringatan dini resmi BMKG/BNPB.
+          </p>
+        </div>
+      </div>
+
+      <!-- 24-Hour Dual-Axis Interactive Chart -->
+      <div class="card card-elevated" style="margin-bottom: var(--space-6);">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              <span>Fluktuasi Suhu 24 Jam &amp; Akumulasi Curah Hujan</span>
+            </h3>
+            <p style="margin: 0; font-size: 0.8125rem; color: var(--text-muted);">
+              Sumbu kiri: Suhu udara (°C). Sumbu kanan: Curah hujan (mm) dengan probabilitas hujan per jam.
+            </p>
+          </div>
+          <span class="badge badge-source">Grafik Dinamis</span>
+        </div>
+        <div style="position: relative; height: 320px; width: 100%;">
+          <canvas id="chart-24h"></canvas>
+        </div>
+      </div>
+
+      <!-- 7-Day Forecast Horizon -->
+      <div class="card card-elevated" style="margin-bottom: var(--space-6);">
+        <div class="card-header">
+          <h3 class="card-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>Prakiraan 7 Hari ke Depan</span>
+          </h3>
+          <span class="badge badge-source">Proyeksi Mingguan</span>
+        </div>
+        <div class="forecast-7day-grid" id="forecast-7day-container">
+          <!-- Dynamically populated 7 day cards -->
+          <div style="padding: 1rem; color: var(--text-muted);">Memuat prakiraan 7 hari...</div>
+        </div>
+      </div>
+
+      <!-- Data Transparency & Audit Trail Table -->
+      <div class="card" style="margin-bottom: var(--space-8);">
+        <div class="card-header">
+          <h3 class="card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span>Status &amp; Transparansi Sumber Data</span>
+          </h3>
+          <span class="badge badge-source">Integritas Data Terbuka</span>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Penyedia Data</th>
+                <th>Cakupan &amp; Endpoint</th>
+                <th>Status Respon</th>
+                <th>Waktu Penarikan Terakhir</th>
+                <th>Atribusi Wajib</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>BMKG Indonesia</strong></td>
+                <td>Prakiraan 3 Hari (Tingkat Desa/Kelurahan)</td>
+                <td id="status-bmkg"><span class="badge status-normal">✓ Menghubungkan</span></td>
+                <td id="time-bmkg" class="mono">—</td>
+                <td>Sumber: BMKG (Terbuka)</td>
+              </tr>
+              <tr>
+                <td><strong>Open-Meteo Global</strong></td>
+                <td>Forecast 7 Hari &amp; Hourly Model DWD/ECMWF</td>
+                <td id="status-openmeteo"><span class="badge status-normal">✓ Menghubungkan</span></td>
+                <td id="time-openmeteo" class="mono">—</td>
+                <td>CC BY 4.0 Open-Meteo</td>
+              </tr>
+              <tr>
+                <td><strong>Open-Meteo CAMS</strong></td>
+                <td>Kualitas Udara US AQI, PM2.5, PM10</td>
+                <td id="status-aqi"><span class="badge status-normal">✓ Menghubungkan</span></td>
+                <td id="time-aqi" class="mono">—</td>
+                <td>Copernicus CAMS Model</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- High-End Civic Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-group">
+            <div class="logo-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <span class="logo-title">KotaTangguh</span>
+          </div>
+          <p>
+            Platform edukasi dan ketahanan iklim perkotaan Indonesia. Mengadvokasi transparansi data cuaca terbuka untuk komunitas perkotaan yang tangguh dan adaptif.
+          </p>
+          <div class="sdg-badges" style="margin-top: var(--space-4);">
+            <span class="sdg-pill sdg-11">SDG 11: Kota Berkelanjutan</span>
+            <span class="sdg-pill sdg-13">SDG 13: Aksi Iklim</span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigasi</h4>
+          <ul>
+            <li><a href="/">Beranda</a></li>
+            <li><a href="/dashboard.html">Dashboard Cuaca</a></li>
+            <li><a href="/explore.html">Jelajahi Peta</a></li>
+            <li><a href="/preparedness.html">Pusat Siaga 72 Jam</a></li>
+            <li><a href="/climate-trends.html">Tren Iklim</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Data Terbuka</h4>
+          <ul>
+            <li><a href="https://data.bmkg.go.id" target="_blank" rel="noopener">BMKG Indonesia</a></li>
+            <li><a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo API</a></li>
+            <li><a href="https://www.openstreetmap.org" target="_blank" rel="noopener">OpenStreetMap</a></li>
+            <li><a href="/methodology.html">Metodologi &amp; Formula IKH</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Kesiapsiagaan</h4>
+          <ul>
+            <li><a href="https://bnpb.go.id" target="_blank" rel="noopener">BNPB Indonesia</a></li>
+            <li><a href="https://basarnas.go.id" target="_blank" rel="noopener">BASARNAS</a></li>
+            <li><a href="/preparedness.html#tsb">Tas Siaga Bencana</a></li>
+            <li><a href="/preparedness.html#kontak">Kontak Darurat 112</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 KotaTangguh • Lomba Nasional Web Desain 2026. Dikembangkan dengan prinsip Human-Centered UI/UX.</p>
+        <p class="mono" style="font-size: 0.75rem;">Status: BMKG Open API • CC BY 4.0 Open-Meteo • ODbL OpenStreetMap</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

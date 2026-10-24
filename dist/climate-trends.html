@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analisis Tren Iklim Historis — KotaTangguh</title>
+  <meta name="description" content="Visualisasi data arsip reanalisis iklim suhu dan presipitasi kota di Indonesia berbasis Open-Meteo ERA5. Lomba Nasional Web Desain 2026.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230ea5e9'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+  <script type="module" crossorigin src="/assets/climateTrends-JEd5hA9x.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/pages-0P5Txbp4.js">
+  <link rel="modulepreload" crossorigin href="/assets/openmeteo-weather-Bj35Lj7e.js">
+  <link rel="modulepreload" crossorigin href="/assets/chart-bkSZlCes.js">
+  <link rel="stylesheet" crossorigin href="/assets/pages-C66s7fnm.css">
+</head>
+<body>
+  <!-- Header Navigation -->
+  <header class="header">
+    <div class="container">
+      <a href="/" class="logo-group">
+        <div class="logo-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-title">KotaTangguh</span>
+          <span class="logo-subtitle">Climate Resilience</span>
+        </div>
+      </a>
+
+      <nav class="nav" id="main-nav">
+        <a href="/">Beranda</a>
+        <a href="/dashboard.html">Dashboard Cuaca</a>
+        <a href="/explore.html">Jelajahi Peta</a>
+        <a href="/preparedness.html">Pusat Siaga 72 Jam</a>
+        <a href="/climate-trends.html" class="active">Tren Iklim</a>
+        <a href="/methodology.html">Data &amp; Metodologi</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="nav-badge-live">
+          <span class="pulse-dot"></span>
+          <span>BMKG LIVE</span>
+        </div>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Buka Menu Navigasi">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div style="margin-bottom: var(--space-6);">
+        <span class="hero-tag">📈 Analisis Longitudinal • SDG 13</span>
+        <h1 style="margin-bottom: var(--space-2);">Eksplorasi Tren &amp; Arsip Iklim Historis</h1>
+        <p style="margin: 0; color: var(--text-secondary); max-width: 800px;">
+          Pahami pola variabilitas cuaca jangka menengah kota Anda. Data ditarik dari reanalisis global ERA5 (Open-Meteo Historical Archive) untuk mengkaji fluktuasi suhu dan frekuensi hujan ekstrem.
+        </p>
+      </div>
+
+      <!-- Controls & Filter Card -->
+      <div class="trends-filter-card">
+        <div class="grid-2" style="margin-bottom: var(--space-4);">
+          <!-- Location Picker -->
+          <div>
+            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px;">
+              Pilih Kota Pengamatan:
+            </label>
+            <div style="display: flex; gap: var(--space-2);">
+              <select id="select-city" class="search-input" style="flex: 1; padding: 0.75rem 1rem;">
+                <optgroup label="Pulau Jawa (6 Provinsi)">
+                  <option value="dki-jakarta">DKI Jakarta — Jakarta Pusat</option>
+                  <option value="jawa-barat">Jawa Barat — Bandung</option>
+                  <option value="banten">Banten — Serang</option>
+                  <option value="jawa-tengah">Jawa Tengah — Semarang</option>
+                  <option value="di-yogyakarta">DI Yogyakarta — Yogyakarta</option>
+                  <option value="jawa-timur">Jawa Timur — Surabaya</option>
+                </optgroup>
+                <optgroup label="Pulau Sumatera (10 Provinsi)">
+                  <option value="aceh">Aceh — Banda Aceh</option>
+                  <option value="sumatera-utara">Sumatera Utara — Medan</option>
+                  <option value="sumatera-barat">Sumatera Barat — Padang</option>
+                  <option value="riau">Riau — Pekanbaru</option>
+                  <option value="kepulauan-riau">Kepulauan Riau — Tanjung Pinang</option>
+                  <option value="jambi">Jambi — Jambi</option>
+                  <option value="sumatera-selatan">Sumatera Selatan — Palembang</option>
+                  <option value="bangka-belitung">Kep. Bangka Belitung — Pangkal Pinang</option>
+                  <option value="bengkulu">Bengkulu — Bengkulu</option>
+                  <option value="lampung">Lampung — Bandar Lampung</option>
+                </optgroup>
+                <optgroup label="Bali & Nusa Tenggara (3 Provinsi)">
+                  <option value="bali">Bali — Denpasar</option>
+                  <option value="nusa-tenggara-barat">Nusa Tenggara Barat — Mataram</option>
+                  <option value="nusa-tenggara-timur">Nusa Tenggara Timur — Kupang</option>
+                </optgroup>
+                <optgroup label="Pulau Kalimantan (5 Provinsi)">
+                  <option value="kalimantan-barat">Kalimantan Barat — Pontianak</option>
+                  <option value="kalimantan-tengah">Kalimantan Tengah — Palangka Raya</option>
+                  <option value="kalimantan-selatan">Kalimantan Selatan — Banjarmasin</option>
+                  <option value="kalimantan-timur">Kalimantan Timur — Samarinda</option>
+                  <option value="kalimantan-utara">Kalimantan Utara — Tanjung Selor</option>
+                </optgroup>
+                <optgroup label="Pulau Sulawesi (6 Provinsi)">
+                  <option value="sulawesi-utara">Sulawesi Utara — Manado</option>
+                  <option value="gorontalo">Gorontalo — Gorontalo</option>
+                  <option value="sulawesi-tengah">Sulawesi Tengah — Palu</option>
+                  <option value="sulawesi-barat">Sulawesi Barat — Mamuju</option>
+                  <option value="sulawesi-selatan">Sulawesi Selatan — Makassar</option>
+                  <option value="sulawesi-tenggara">Sulawesi Tenggara — Kendari</option>
+                </optgroup>
+                <optgroup label="Kepulauan Maluku (2 Provinsi)">
+                  <option value="maluku">Maluku — Ambon</option>
+                  <option value="maluku-utara">Maluku Utara — Sofifi / Ternate</option>
+                </optgroup>
+                <optgroup label="Tanah Papua (6 Provinsi)">
+                  <option value="papua">Papua — Jayapura</option>
+                  <option value="papua-barat">Papua Barat — Manokwari</option>
+                  <option value="papua-barat-daya">Papua Barat Daya — Sorong</option>
+                  <option value="papua-tengah">Papua Tengah — Nabire</option>
+                  <option value="papua-pegunungan">Papua Pegunungan — Wamena</option>
+                  <option value="papua-selatan">Papua Selatan — Merauke</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+
+          <!-- Date Presets -->
+          <div>
+            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px;">
+              Pilihan Rentang Waktu:
+            </label>
+            <div class="date-presets-row">
+              <button class="filter-pill active" data-days="7">7 Hari Terakhir</button>
+              <button class="filter-pill" data-days="30">30 Hari Terakhir</button>
+              <button class="filter-pill" data-days="90">3 Bulan Terakhir</button>
+              <button class="filter-pill" data-days="365">1 Tahun Terakhir</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom Date Range Row -->
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: var(--space-4); flex-wrap: wrap; gap: var(--space-3);">
+          <div style="display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap;">
+            <div style="font-size: 0.8125rem; color: var(--text-muted);">Rentang Kustom:</div>
+            <input type="date" id="date-start" class="search-input" style="padding: 0.4rem 0.75rem; width: auto; font-size: 0.85rem;">
+            <span style="color: var(--text-muted);">s/d</span>
+            <input type="date" id="date-end" class="search-input" style="padding: 0.4rem 0.75rem; width: auto; font-size: 0.85rem;">
+            <button class="btn btn-secondary btn-sm" id="btn-custom-date">Terapkan Rentang</button>
+          </div>
+          <div style="display: flex; gap: var(--space-2);">
+            <button class="btn btn-outline btn-sm" id="btn-export-csv" title="Unduh dataset historis format CSV">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span>Ekspor Dataset CSV</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistical Summary Metrics Row -->
+      <div class="metrics-row" style="margin-bottom: var(--space-6);">
+        <div class="metric-tile">
+          <div class="metric-label">Suhu Rata-Rata</div>
+          <div class="metric-value"><span id="stat-mean-temp">--</span><span class="metric-unit">°C</span></div>
+        </div>
+        <div class="metric-tile">
+          <div class="metric-label">Suhu Maksimum</div>
+          <div class="metric-value" style="color: #f87171;"><span id="stat-max-temp">--</span><span class="metric-unit">°C</span></div>
+        </div>
+        <div class="metric-tile">
+          <div class="metric-label">Total Curah Hujan</div>
+          <div class="metric-value"><span id="stat-total-rain">--</span><span class="metric-unit">mm</span></div>
+        </div>
+        <div class="metric-tile">
+          <div class="metric-label">Hujan Harian Tertinggi</div>
+          <div class="metric-value" style="color: #fbbf24;"><span id="stat-max-rain">--</span><span class="metric-unit">mm</span></div>
+        </div>
+        <div class="metric-tile">
+          <div class="metric-label">Jumlah Hari Berhujan</div>
+          <div class="metric-value"><span id="stat-rain-days">--</span><span class="metric-unit">Hari</span></div>
+        </div>
+      </div>
+
+      <!-- Chart 1: Mean Temperature Trend -->
+      <div class="chart-wrapper-card">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+              <span>Dinamika Suhu Rata-Rata Harian (°C)</span>
+            </h3>
+            <p style="margin: 0; font-size: 0.8125rem; color: var(--text-muted);">
+              Garis tren suhu harian dari arsip reanalisis ERA5. Menampilkan variabilitas termal atmosfer.
+            </p>
+          </div>
+          <span class="badge badge-source">ERA5 Reanalysis</span>
+        </div>
+        <div class="chart-canvas-container">
+          <canvas id="chart-temp-trend"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 2: Daily Precipitation -->
+      <div class="chart-wrapper-card">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"/><line x1="8" y1="16" x2="8.01" y2="16"/><line x1="8" y1="20" x2="8.01" y2="20"/><line x1="12" y1="18" x2="12.01" y2="18"/><line x1="12" y1="22" x2="12.01" y2="22"/><line x1="16" y1="16" x2="16.01" y2="16"/><line x1="16" y1="20" x2="16.01" y2="20"/></svg>
+              <span>Akumulasi Curah Hujan Harian (mm)</span>
+            </h3>
+            <p style="margin: 0; font-size: 0.8125rem; color: var(--text-muted);">
+              Bar curah hujan harian. Nilai di atas 20mm dikategorikan sebagai intensitas sedang-lebat perkotaan.
+            </p>
+          </div>
+          <span class="badge badge-source">Presipitasi Historis</span>
+        </div>
+        <div class="chart-canvas-container">
+          <canvas id="chart-rain-trend"></canvas>
+        </div>
+      </div>
+
+      <!-- Contextual Educational Card -->
+      <div class="card" style="margin-bottom: var(--space-8); background: rgba(14, 165, 233, 0.05); border-color: rgba(14, 165, 233, 0.25);">
+        <h4 style="color: var(--primary-light); margin-bottom: 6px;">Catatan Analitis Iklim Indonesia</h4>
+        <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0;">
+          Indonesia memiliki dua musim utama yang dipengaruhi angin Muson Barat (November - Maret: musim hujan) dan Muson Timur (Mei - September: musim kemarau). Lonjakan curah hujan lokal sering dipicu oleh fenomena Madden-Julian Oscillation (MJO), gelombang atmosfer Kelvin/Rossby, serta dinamika suhu muka laut regional (ENSO dan Indian Ocean Dipole).
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- High-End Civic Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-group">
+            <div class="logo-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <span class="logo-title">KotaTangguh</span>
+          </div>
+          <p>
+            Platform edukasi dan ketahanan iklim perkotaan Indonesia. Mengadvokasi transparansi data cuaca terbuka untuk komunitas perkotaan yang tangguh dan adaptif.
+          </p>
+          <div class="sdg-badges" style="margin-top: var(--space-4);">
+            <span class="sdg-pill sdg-11">SDG 11: Kota Berkelanjutan</span>
+            <span class="sdg-pill sdg-13">SDG 13: Aksi Iklim</span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigasi</h4>
+          <ul>
+            <li><a href="/">Beranda</a></li>
+            <li><a href="/dashboard.html">Dashboard Cuaca</a></li>
+            <li><a href="/explore.html">Jelajahi Peta</a></li>
+            <li><a href="/preparedness.html">Pusat Siaga 72 Jam</a></li>
+            <li><a href="/climate-trends.html">Tren Iklim</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Data Terbuka</h4>
+          <ul>
+            <li><a href="https://data.bmkg.go.id" target="_blank" rel="noopener">BMKG Indonesia</a></li>
+            <li><a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo API</a></li>
+            <li><a href="https://www.openstreetmap.org" target="_blank" rel="noopener">OpenStreetMap</a></li>
+            <li><a href="/methodology.html">Metodologi &amp; Formula IKH</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Kesiapsiagaan</h4>
+          <ul>
+            <li><a href="https://bnpb.go.id" target="_blank" rel="noopener">BNPB Indonesia</a></li>
+            <li><a href="https://basarnas.go.id" target="_blank" rel="noopener">BASARNAS</a></li>
+            <li><a href="/preparedness.html#tsb">Tas Siaga Bencana</a></li>
+            <li><a href="/preparedness.html#kontak">Kontak Darurat 112</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 KotaTangguh • Lomba Nasional Web Desain 2026. Dikembangkan dengan prinsip Human-Centered UI/UX.</p>
+        <p class="mono" style="font-size: 0.75rem;">Status: BMKG Open API • CC BY 4.0 Open-Meteo • ODbL OpenStreetMap</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
